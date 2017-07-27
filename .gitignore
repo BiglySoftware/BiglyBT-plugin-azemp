@@ -5,3 +5,13 @@
 /VLCJ_gpl.txt
 /VLCJ_lgpl-3.0.txt
 /VLCJ_README.LICENSE
+*.class
+*.DS_Store
+*.biglybt
+*.bak
+*.zip
+/vlcj*.jar
+/slf4j*.jar
+/jna*.jar
+/libmprCanvas*.jar
+/azemp*.jar
