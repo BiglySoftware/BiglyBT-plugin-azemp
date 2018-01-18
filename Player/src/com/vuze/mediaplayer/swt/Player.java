@@ -491,7 +491,7 @@ Player
 			player.clearDurationInSecs();
 		}
 		controls.prepare();
-		controls.setPlayEnabled( true );
+		controls.setPlayEnabled( true, false );
 		controls.setSeekMaxTime( stream_mode?0:-1 );
 		player.open(file);		
 	}
@@ -501,7 +501,7 @@ Player
 		stop();
 		player.clearDurationInSecs();
 		controls.prepare();
-		controls.setPlayEnabled( false );
+		controls.setPlayEnabled( false, false );
 		controls.setSeekMaxTime( 0 );
 	}
 	
@@ -511,12 +511,12 @@ Player
 	
 	public void pause() {
 		player.doPause();
-		controls.setPlayEnabled( false );
+		controls.setPlayEnabled( false, false );
 	}
 	
 	public void resume() {
 		bufferingControls.hide();
-		controls.setPlayEnabled( true );
+		controls.setPlayEnabled( true, false );
 		player.doResume();
 	}
 	
@@ -614,7 +614,7 @@ Player
 		// System.out.println( "buffering: " + map );
 
 		bufferingControls.show();
-		controls.setPlayEnabled( false );
+		controls.setPlayEnabled( false, true );
 		
 		String	line1;
 		String	line2;

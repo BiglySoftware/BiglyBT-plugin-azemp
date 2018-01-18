@@ -124,6 +124,7 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 	public abstract void doStop();
 	public abstract void doRedraw();
 	public abstract void doSeek(float timeInSecs);
+	public abstract boolean canSeekAhead();
 	public abstract void doSetVolume(int volume);	
 	public abstract void doLoadSubtitlesFile(String file,boolean autoPlay);
 	public abstract void dispose();

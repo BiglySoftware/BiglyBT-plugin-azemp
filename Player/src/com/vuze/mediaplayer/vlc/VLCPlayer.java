@@ -1233,6 +1233,13 @@ VLCPlayer
 	}
 	
 	@Override
+	public boolean 
+	canSeekAhead()
+	{	
+		return true;
+	}
+	
+	@Override
 	public void
 	doSeek(
 		final float timeInSecs)

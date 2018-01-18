@@ -14,6 +14,8 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Listener;
 import com.biglybt.core.internat.MessageText;
+import com.biglybt.core.logging.LogAlert;
+import com.biglybt.core.logging.Logger;
 import com.biglybt.core.util.Debug;
 import org.opensubtitles.api.OpenSubtitlesAPI;
 
@@ -58,6 +60,11 @@ public class MPlayer extends BaseMediaPlayerSWT {
 	
 		super(preferences);
 		
+		LogAlert alert = new LogAlert( this, LogAlert.UNREPEATABLE, LogAlert.AT_WARNING, MessageText.getString("azemp.vlc.switch" ));
+
+		alert.forceNotify = true;
+
+		Logger.log( alert );
 		
 		output = new LinkedList<String>();
 		
@@ -604,6 +611,12 @@ public class MPlayer extends BaseMediaPlayerSWT {
 		reportNewState(MediaPlaybackState.Playing);
 	}
 
+	@Override
+	public boolean 
+	canSeekAhead()
+	{	
+		return false;
+	}
 	
 	@Override
 	public void

@@ -102,7 +102,8 @@ public class FullScreenControls {
 	Shell shell;
 	
 	volatile long 		currentTimeInSecs;
-	volatile boolean 	playPauseButton_enabled	= true;
+	volatile boolean 	playPauseButton_enabled				= true;
+	volatile boolean 	playPauseButton_enabled_buffering	= false;
 	volatile float 		seek_max_time			= -1;
 
 	Label currentTime;
@@ -299,9 +300,10 @@ public class FullScreenControls {
 	public void
 	prepare()
 	{
-		currentTimeInSecs			= 0;
-		playPauseButton_enabled		= true;
-		seek_max_time				= -1;
+		currentTimeInSecs					= 0;
+		playPauseButton_enabled				= true;
+		playPauseButton_enabled_buffering	= false;
+		seek_max_time						= -1;
 		
 		updateSliderPosition( TIME_SLIDER_MIN_X );
 		updateTimeDisplay( 0 );
@@ -309,9 +311,11 @@ public class FullScreenControls {
 	
 	public void
 	setPlayEnabled( 
-		boolean		enabled )
+		boolean		enabled,
+		boolean		is_buffering )
 	{
-		playPauseButton_enabled = enabled;
+		playPauseButton_enabled 			= enabled;
+		playPauseButton_enabled_buffering	= is_buffering;
 	}
 	
 	private void buildLanguagesMenu() {
@@ -789,11 +793,31 @@ public class FullScreenControls {
 	private int sliderSeekOffsetX;
 	private boolean wasPlayerPaused;
 	
-	private void addTimeSliderListener() {
+	private boolean
+	timeSliderEnabled()
+	{
+		if ( playPauseButton_enabled ){
+			
+			return( true );
+		}
+		
+		if ( player.canSeekAhead()){
+			
+			if ( playPauseButton_enabled_buffering ){
+				
+				return( true );
+			}
+		}
+		
+		return( false );
+	}
+	
+	private void addTimeSliderListener() 
+	{
 		timeSlider.addListener(SWT.MouseDown, new Listener() {
 			@Override
 			public void handleEvent(Event evt) {
-				if ( !playPauseButton_enabled ){
+				if ( !timeSliderEnabled() ){
 					return;
 				}
 				if ( isTimeSliding )return;
@@ -809,7 +833,7 @@ public class FullScreenControls {
 		timeSlider.addListener(SWT.MouseUp, new Listener() {
 			@Override
 			public void handleEvent(Event evt) {
-				if ( !playPauseButton_enabled ){
+				if ( !timeSliderEnabled() ){
 					return;
 				}
 				timeSlider.setBackgroundImage(sliderImage);
@@ -825,7 +849,7 @@ public class FullScreenControls {
 		timeSlider.addListener(SWT.MouseMove, new Listener() {
 			@Override
 			public void handleEvent(Event evt) {
-				if ( !playPauseButton_enabled ){
+				if ( !timeSliderEnabled() ){
 					return;
 				}
 				if(!isTimeSliding) return;
@@ -1163,7 +1187,7 @@ public class FullScreenControls {
 	}
 
 	private void seekFromSlider(int x) {	
-		if ( !playPauseButton_enabled ){
+		if ( !timeSliderEnabled()){
 			return;
 		}
 		boolean paused = player.getCurrentState() == MediaPlaybackState.Paused;
@@ -1221,9 +1245,12 @@ public class FullScreenControls {
 	private float getTimeFromSliderX(int x) {
 		float time = player.getDurationInSecs() * (x - timeSliderRectangle.x) / (timeSliderRectangle.width);
 		
-		if ( seek_max_time >= 0 ){
+		if ( !player.canSeekAhead()){
 			
-			time = Math.min( time, seek_max_time );
+			if ( seek_max_time >= 0 ){
+			
+				time = Math.min( time, seek_max_time );
+			}
 		}
 				
 		return( time );
