@@ -135,9 +135,17 @@ VLCPlayer
 					
 						if ( mpFactory == null ){
 							
-							if ( new NativeDiscovery().discover()){
-														
-								mpFactory = new MediaPlayerFactory();
+							if ( Constants.isOSX ) {
+								if ( new NativeDiscoveryOSXHack().discover()){
+									
+									mpFactory = new MediaPlayerFactory();
+								}
+	
+							}else {
+								if ( new NativeDiscovery().discover()){
+															
+									mpFactory = new MediaPlayerFactory();
+								}
 							}
 						}
 						
