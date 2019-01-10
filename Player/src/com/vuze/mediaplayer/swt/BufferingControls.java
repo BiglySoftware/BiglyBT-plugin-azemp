@@ -110,9 +110,9 @@ BufferingControls
 			data.setHeight(Utils.isMacOSX() ? 10 : 8);
 		}
 		GC gc = new GC(parent);
-		text1Font = FontUtils.getFontWithHeight(parent.getFont(),gc , LINE1_HEIGHT ,SWT.BOLD);
-		text2Font = FontUtils.getFontWithHeight(parent.getFont(),gc , LINE2_HEIGHT ,SWT.BOLD);
-		text3Font = FontUtils.getFontWithHeight(parent.getFont(),gc , LINE3_HEIGHT ,SWT.NORMAL);
+		text1Font = FontUtils.getFontWithHeight(parent.getFont(), LINE1_HEIGHT ,SWT.BOLD);
+		text2Font = FontUtils.getFontWithHeight(parent.getFont(), LINE2_HEIGHT ,SWT.BOLD);
+		text3Font = FontUtils.getFontWithHeight(parent.getFont(), LINE3_HEIGHT ,SWT.NORMAL);
 		gc.dispose();
 		
 		shell = new Shell(shell_parent,SWT.NO_TRIM);

@@ -208,7 +208,7 @@ public class FullScreenControls {
 		textColor = new Color(display, 152,178,200);
 		
 		GC gc = new GC(parent);
-		textFont = FontUtils.getFontWithHeight(parent.getFont(),gc , Constants.isOSX?10:12 ,SWT.BOLD);
+		textFont = FontUtils.getFontWithHeight(parent.getFont(), Constants.isOSX?10:12 ,SWT.BOLD);
 		gc.dispose();
 		
 		shell = new Shell(shell_parent,SWT.NO_TRIM);
