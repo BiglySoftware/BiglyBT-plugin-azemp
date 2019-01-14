@@ -135,17 +135,9 @@ VLCPlayer
 					
 						if ( mpFactory == null ){
 							
-							if ( Constants.isOSX ) {
-								if ( new NativeDiscoveryOSXHack().discover()){
-									
-									mpFactory = new MediaPlayerFactory();
-								}
-	
-							}else {
-								if ( new NativeDiscovery().discover()){
+							if ( new NativeDiscovery().discover()){
 															
-									mpFactory = new MediaPlayerFactory();
-								}
+								mpFactory = new MediaPlayerFactory();
 							}
 						}
 						
@@ -848,6 +840,14 @@ VLCPlayer
 				
 				@Override
 				public void mediaParsedChanged(MediaPlayer arg0, int arg1) {
+				}
+				
+				@Override
+				public void mediaParsedStatus(MediaPlayer arg0, int arg1){
+				}
+				
+				@Override
+				public void mediaPlayerReady(MediaPlayer arg0){
 				}
 				
 				@Override
